@@ -40,7 +40,7 @@ void Preenchimento(int **mat, int N, int porc, int direc, int k){
 				
 			}
 			mat[l][c]=rand()%1000;
-			fprintf(arq,"%d\t%d\t%d\n",l,c, mat[l][c]);
+			//fprintf(arq,"%d\t%d\t%d\n",l,c, mat[l][c]);
 		}
 	}
 	if(direc==2){
@@ -56,10 +56,19 @@ void Preenchimento(int **mat, int N, int porc, int direc, int k){
 				
 			}
 			mat[l][c]=mat[c][l]=rand()%1000;
-			fprintf(arq,"%d\t%d\t%d\n",l,c, mat[l][c]);
-			fprintf(arq,"%d\t%d\t%d\n",c,l, mat[c][l]);
+			//fprintf(arq,"%d\t%d\t%d\n",l,c, mat[l][c]);
+			//fprintf(arq,"%d\t%d\t%d\n",c,l, mat[c][l]);
 		}
 	}
+
+	for(int i=0; i<N; i++){
+		for(int j=0; j<N; j++){	      
+	        if(mat[i][j]!=0){
+				fprintf(arq,"%d\t%d\t%d\n",i,j, mat[i][j]);
+			}
+    	}
+    }
+	
 	fclose(arq);
 }
 
