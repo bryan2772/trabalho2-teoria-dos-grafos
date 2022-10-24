@@ -11,7 +11,20 @@ void imprime(int **mat, int N){
     }
 }
 
-void Preenchimento(int **mat, int N, int porc, int direc){
+void Preenchimento(int **mat, int N, int porc, int direc, int k){
+	FILE *arq;
+	int resultado;
+	char Str[50];
+
+	arq = fopen("graph.dat", "w");
+
+	if (arq == NULL){
+		printf("Problemas na CRIACAO do arquivo\n");
+		return;
+	}
+
+	fprintf(arq,"%d\t%d\n",k, porc);
+
 	int l, c, tam=N, tam2=N-1;
 	srand(time(NULL));
 	if(direc==1){
@@ -27,6 +40,7 @@ void Preenchimento(int **mat, int N, int porc, int direc){
 				
 			}
 			mat[l][c]=rand()%1000;
+			fprintf(arq,"%d\t%d\t%d\n",l,c, mat[l][c]);
 		}
 	}
 	if(direc==2){
@@ -42,8 +56,11 @@ void Preenchimento(int **mat, int N, int porc, int direc){
 				
 			}
 			mat[l][c]=mat[c][l]=rand()%1000;
+			fprintf(arq,"%d\t%d\t%d\n",l,c, mat[l][c]);
+			fprintf(arq,"%d\t%d\t%d\n",c,l, mat[c][l]);
 		}
 	}
+	fclose(arq);
 }
 
 
@@ -69,7 +86,7 @@ int main(){
     k=((N*N)-N)/2; porcentagem=k*d;
     printf("\n%d %d\n", k, porcentagem);
     
-	Preenchimento(mat, N, porcentagem, direcionado);
+	Preenchimento(mat, N, porcentagem, direcionado, k);
 
     imprime(mat, N);
 
