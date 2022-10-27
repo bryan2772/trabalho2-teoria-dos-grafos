@@ -73,80 +73,80 @@ void BFS(int **mat, int N){
 	for(int i=0; i<N; i++)
 		alcancado[i]=0;
     
-    for(int k=0; k<N; k++)
+    for(int k=0; k<N; k++)	//procura um valor para i
 		for(int j=0; j<N; j++)
 	        if(mat[j][k] != 0){
 	        	for(int l=0; l<N; l++){	
 					alcancado[j]=1;
 				}
 	        	i.num=j;
-	        	Enfileira(i, &fila); 
+	        	Enfileira(i, &fila); 		//enfileire i e marque-o como alcançado (visitado);
 	        	k=N; j=N;
 			}
-	exibe(fila); printf("\n");
+	exibe(fila); printf("\n");	//inicio BFS
 
-    while(!Vazia(fila)){
-    	i.num=fila.Frente->Prox->Item.num;
-    	Desenfileira(&fila, &i);
-    	for(int j=0; j<N; j++){
+    while(!Vazia(fila)){		//enquanto (fila ≠ ∅)) faça
+    	i.num=fila.Frente->Prox->Item.num;		//i ← vértice da frente da fila;
+    	Desenfileira(&fila, &i);		//desenfileire i;
+    	for(int j=0; j<N; j++){		//∀ aresta (i,j), tal que j ainda não foi alcançado faça
 			if(mat[i.num][j]!=0 && alcancado[j]!=1){
-				alcancado[j]=1;
+				alcancado[j]=1;		//marque j como alcançado;
 		    	item.num=j;
-				Enfileira(item, &fila);
+				Enfileira(item, &fila);		//enfileire j;
 			} 
 			exibe(fila); printf("\n");
 		}
-	}
+	}	//fim BFS
 }
 
 void Dijkstra(int **mat, int N){
 	int c[N], d[N], i, pos=0, menor=1001, v, l=0, w, tam=0;
 	for(int i=0; i<N; i++)
 		c[i]=d[i]=0;
-	for(int k=0; k<N; k++)
+	for(int k=0; k<N; k++)		//procura um valor para i
 		for(int j=0; j<N; j++)
 	        if(mat[k][j] != 0){
 	        	i=k;
 	        	k=N; j=N;
 			}
 
-	for(int j=0; j<N; j++)
-		if(mat[i][j]!=0){
+	for(int j=0; j<N; j++)		//inicio dijkstra
+		if(mat[i][j]!=0){		//C ← {V – {i}};
 			c[pos]=j;
 			pos++; tam++;
 		}
-	for(int j=0; j<N; j++){
-		if(mat[i][j]==0)
+	for(int j=0; j<N; j++){		//para j de 1 até n faça
+		if(mat[i][j]==0)		//D[ j ] ← Mat[i][j];
 			d[j]=2147483647;
 		else
 			d[j]=mat[i][j];
 	}
-	for(int k=0; k<(N-2); k++){
+	for(int k=0; k<(N-2); k++){		//repita n – 2 vezes
 		menor=1001; l=0;
-		for(int i=0;i<N;i++){
+		for(int i=0;i<N;i++){			//v ← elemento de C que minimiza D[v];
 			if(d[i]<menor && c[l]!=-1){
 				menor=d[i];
 				pos=i;
 			}
 			if(d[i]<=1000)
 				l++;
-		}
+		}							//
 		v=pos;
 		for(int i=0; i<tam; i++)
-			if(c[i]==v){	
+			if(c[i]==v){			//C ← C – {v};
 				c[i]=-1;
 			}
-		for(int i=0; i<tam; i++){
+		for(int i=0; i<tam; i++){		//para cada elemento w ∈ C faça
 			if(c[i]!=-1){	
 				w=c[i];
-				if(mat[v][w]==0)
+				if(mat[v][w]==0)			//D[w] ← min(D[w], D[v] + Mat[v][w])
 					mat[v][w]=2000000000;
 				if(d[w]>(d[v]+mat[v][w]))
 					d[w]=d[v]+mat[v][w];
 				//d[w]=min_element(d[w], d[v] + mat[v][w]);
 			}
 		}
-	}
+	}		//fim dijkstra
 		
 	printf("\nc: ");
 	for(int i=0;i<N;i++)
