@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <bits/stdc++.h>
 #include <time.h>
+using namespace std;
 
 //fila
 typedef struct TipoCelula *TipoApontador; 
@@ -95,13 +97,67 @@ void BFS(int **mat, int N){
 			exibe(fila); printf("\n");
 		}
 	}
-	
+}
+
+void Dijkstra(int **mat, int N){
+	int c[N], d[N], i, pos=0, menor=1001, v, l=0, w, tam=0;
+	for(int i=0; i<N; i++)
+		c[i]=d[i]=0;
+	for(int k=0; k<N; k++)
+		for(int j=0; j<N; j++)
+	        if(mat[k][j] != 0){
+	        	i=k;
+	        	k=N; j=N;
+			}
+
+	for(int j=0; j<N; j++)
+		if(mat[i][j]!=0){
+			c[pos]=j;
+			pos++; tam++;
+		}
+	for(int j=0; j<N; j++){
+		if(mat[i][j]==0)
+			d[j]=2147483647;
+		else
+			d[j]=mat[i][j];
+	}
+	for(int k=0; k<(N-2); k++){
+		menor=1001; l=0;
+		for(int i=0;i<N;i++){
+			if(d[i]<menor && c[l]!=-1){
+				menor=d[i];
+				pos=i;
+			}
+			if(d[i]<=1000)
+				l++;
+		}
+		v=pos;
+		for(int i=0; i<tam; i++)
+			if(c[i]==v){	
+				c[i]=-1;
+			}
+		for(int i=0; i<tam; i++){
+			if(c[i]!=-1){	
+				w=c[i];
+				if(mat[v][w]==0)
+					mat[v][w]=2000000000;
+				if(d[w]>(d[v]+mat[v][w]))
+					d[w]=d[v]+mat[v][w];
+				//d[w]=min_element(d[w], d[v] + mat[v][w]);
+			}
+		}
+	}
+		
+	printf("\nc: ");
+	for(int i=0;i<N;i++)
+		printf("%d ", c[i]);
+	printf("\nd: ");
+	for(int i=0;i<N;i++)
+		printf("%d ", d[i]);
 }
 
 void Preenchimento(int **mat, int N, int porc, int direc, int k){
 	FILE *arq;
-	int resultado;
-	char Str[50];
 
 	arq = fopen("graph.dat", "w");
 
@@ -184,14 +240,19 @@ int main(){
     imprime(mat, N);
     
     /*int test[8][8]={0,1,1,0,1,0,0,0, 1,0,0,1,0,1,0,0, 1,0,0,1,0,0,1,0, 0,1,1,0,0,0,0,1,	1,0,0,0,0,1,1,0, 0,1,0,0,1,0,0,1, 0,0,1,0,1,0,0,1, 0,0,0,1,0,1,1,0};
-    printf("\n");
+    printf("\n"); //bfs
 	int test[6][6]={0,1,1,0,0,0, 0,0,0,1,0,0, 0,0,0,0,0,1, 0,0,0,0,1,1, 1,1,0,1,0,0, 0,0,1,0,1,0};
-    for(int i=0; i<8; i++){
-		for(int j=0; j<8; j++){	      
+	int test[5][5]={0,50,30,100,10, 0,0,0,0,0, 0,5,0,50,0, 0,20,0,0,0, 0,0,0,10,0};
+    for(int i=0; i<5; i++){
+		for(int j=0; j<5; j++){	      
 	        printf("%d\t", test[i][j]);
     	}
 		printf("\n");	
     }*/
+
+	Dijkstra(mat, N);
+
+	printf("\n\n");
     
     BFS(mat, N);
 
