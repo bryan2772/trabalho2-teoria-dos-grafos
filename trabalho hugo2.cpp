@@ -243,6 +243,53 @@ void Dijkstra(int **mat, int N){
 		printf("%d ", d[i]);
 }
 
+void BellmanFord(int **mat, int N){
+    int d[N], i, v, cont=0, vet[N];
+
+    for(int i=0; i<N; i++)
+        d[i]=vet[i]=0;
+    for(int k=0; k<N; k++)      //procura um valor para i
+        for(int j=0; j<N; j++)
+            if(mat[k][j] != 0){
+                i=v=k;
+                vet[v]=1;
+                k=N; j=N;
+            }
+
+    for(int j=0; j<N; j++)
+        d[j]=2147483647;
+    d[i]=0;
+    for(int j=0; j<N-1; j++){
+        for(int w=0; w<N; w++){
+            if(mat[v][w]!=0){
+                if(mat[v][w]==0){           //D[w] ← min(D[w], D[v] + Mat[v][w])
+                    mat[v][w]=2000000000;
+                    cont=1;
+                }
+                if(d[w]>(d[v]+mat[v][w]))
+                    d[w]=d[v]+mat[v][w];
+                if(cont==1){    
+                    mat[v][w]=0;
+                    cont=0;
+                }   
+            }
+            
+        printf("\n");
+        for(int i=0; i<N; i++)
+            printf("%d ", d[i]);
+        }
+        for(int i=0; i<N; i++)
+            if(vet[i]!=1)   
+                for(int j=0; j<N; j++)
+                    if(mat[i][j] != 0){
+                        v=i;
+                        vet[v]=1;
+                        i=N; j=N;
+                    }
+    }
+    
+}
+
 void Preenchimento(int **mat, int N, int porc, int direc, int k){
 	FILE *arq;
 
@@ -307,7 +354,7 @@ int main(){
 
 	while(op!=0){//laço para gerir a hora de sair do menu 
         
-        printf("\nMENU\n0- Sair\n1-Gerar matriz de grafo \n2-Executar o algoritmo bfs\n3-Executar o algoritmo DFS\n4-Executar o algoritmo deDijkstra\n5-exibe a matriz\n6-ler uma matriz do arquivo .dat\n");
+        printf("\nMENU\n0- Sair\n1-Gerar matriz de grafo \n2-Executar o algoritmo bfs e DFS\n3-Executar o algoritmo bellmanford\n4-Executar o algoritmo de Dijkstra\n5-exibe a matriz\n6-ler uma matriz do arquivo .dat\n");
         scanf("%d",&op);
         system("clear||cls");//limpar a tela
 
@@ -339,12 +386,13 @@ int main(){
 
             case 2:
 				BFS(mat, N);
+				DFS(mat, N);
                 pausa();
                 
             break;
 
 			case 3:
-				DFS(mat, N);
+				BellmanFord(mat, N);
                 pausa();
                 
             break;
