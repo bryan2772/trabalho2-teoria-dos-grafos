@@ -2,7 +2,21 @@
 #include <stdlib.h>
 #include <bits/stdc++.h>
 #include <time.h>
+#include <string.h>
+#include <math.h>
 using namespace std;
+
+void pausa(){//funçao de pausaro sistema
+    int ch;
+    while((ch = fgetc(stdin)) != EOF && ch != '\n');//ja limpa o buffer antes
+    printf ("\nPressione qualquer tecla para continuar...");
+    scanf("%*c");//não PRECISO LIMPAR O BUFFER porque O USUARIO não VAI DIGITAR NADA
+}
+
+void fflush_stdin(){//funçao que limpa o buff
+    int ch;
+    while ((ch = getchar()) != '\n' && ch != EOF);
+}
 
 //fila
 typedef struct TipoCelula *TipoApontador; 
@@ -215,30 +229,73 @@ void Preenchimento(int **mat, int N, int porc, int direc, int k){
 
 int main(){
 	
-	int **mat, N, k, porcentagem, direcionado;
+	int **mat, N, k, porcentagem, direcionado, op=1;
 	float d;
-	printf("Digite um valor para N: "); scanf("%d", &N); //de 3 a 10000000
-	printf("Digite um valor para d: "); scanf("%f", &d); //0.2 a 1
-	printf("O grafo � direcionado ou  n�o?\n1-sim\t2-nao\t"); scanf("%d", &direcionado);
-	 
-    mat = static_cast<int* *>(malloc(N * sizeof(int*)));
-    for(int i = 0; i < N; i++)
-        mat[i] = static_cast<int *> (malloc(N * sizeof(int)));
-    srand(time(NULL));
 
-	for(int i=0; i<N; i++){
-	 	for(int j=0; j<N; j++){	      
-	        mat[i][j] = 0;
-    	}	
+	while(op!=0){//laço para gerir a hora de sair do menu 
+        
+        printf("\nMENU\n0- Sair\n1-Gerar matriz de grafo \n2-Executar o algoritmo bfs\n3-Executar o algoritmo deDijkstra\n4-exibe a matriz\n5-ler uma matriz do arquivo .dat\n");
+        scanf("%d",&op);
+        system("clear||cls");//limpar a tela
+
+        switch (op){//switch para seleçao de qual opçao seguir
+            case 1:
+                printf("Digite um valor para N: "); scanf("%d", &N); //de 3 a 10000000
+				printf("Digite um valor para d: "); scanf("%f", &d); //0.2 a 1
+				printf("O grafo � direcionado ou  n�o?\n1-sim\t2-nao\t"); scanf("%d", &direcionado);
+				
+				mat = static_cast<int* *>(malloc(N * sizeof(int*)));//aloca a matriz dinamicamente
+				for(int i = 0; i < N; i++)
+					mat[i] = static_cast<int *> (malloc(N * sizeof(int)));
+				srand(time(NULL));
+
+				for(int i=0; i<N; i++){//zera toda a matriz
+					for(int j=0; j<N; j++){	      
+						mat[i][j] = 0;
+					}	
+				}
+				
+				k=((N*N)-N)/2; porcentagem=k*d;//calcula a quantidade de arestas com base na porcentagem
+				printf("\n%d %d\n", k, porcentagem);
+				
+				Preenchimento(mat, N, porcentagem, direcionado, k);//gera a matriz
+				imprime(mat, N);
+    
+                pausa();
+            break;
+
+            case 2:
+				BFS(mat, N);
+                pausa();
+                
+            break;
+			 case 3: 
+				Dijkstra(mat, N);
+				printf("\n\n");
+                pausa();
+                
+            break;
+			 case 4: 
+				imprime(mat, N);
+                pausa();
+                
+            break;
+			 case 5: 
+				/*opçao para ler um arquivo .dat*/
+                
+                pausa();
+                
+            break;
+
+            default:
+                printf("\nsaindoo...\n");
+                pausa();
+                
+            break;
+        }
+        system("clear||cls");
     }
-    
-    k=((N*N)-N)/2; porcentagem=k*d;
-	printf("\n%d %d\n", k, porcentagem);
-    
-	Preenchimento(mat, N, porcentagem, direcionado, k);
-
-    imprime(mat, N);
-    
+   
     /*int test[8][8]={0,1,1,0,1,0,0,0, 1,0,0,1,0,1,0,0, 1,0,0,1,0,0,1,0, 0,1,1,0,0,0,0,1,	1,0,0,0,0,1,1,0, 0,1,0,0,1,0,0,1, 0,0,1,0,1,0,0,1, 0,0,0,1,0,1,1,0};
     printf("\n"); //bfs
 	int test[6][6]={0,1,1,0,0,0, 0,0,0,1,0,0, 0,0,0,0,0,1, 0,0,0,0,1,1, 1,1,0,1,0,0, 0,0,1,0,1,0};
@@ -249,12 +306,6 @@ int main(){
     	}
 		printf("\n");	
     }*/
-
-	Dijkstra(mat, N);
-
-	printf("\n\n");
-    
-    BFS(mat, N);
 
     printf("\nfim\n");
 	
