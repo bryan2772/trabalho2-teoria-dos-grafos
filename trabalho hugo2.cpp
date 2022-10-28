@@ -6,6 +6,70 @@
 #include <math.h>
 using namespace std;
 
+// Estrutura Pilha est�tica
+typedef struct { 
+    char chave; 
+}TipoItem2; 
+
+typedef struct TipoCelula2 *TipoApontador2; 
+
+typedef struct TipoCelula2 { 
+	TipoItem2 Item; 
+	TipoApontador2 Prox; 
+} TipoCelula2; 
+
+typedef struct { 
+	TipoApontador2  Fundo, Topo; 
+	int Tamanho; 
+} TipoPilha;
+
+// Fun��es de manipula��o da pilha din�mica
+
+void FPVazia(TipoPilha *Pilha) { 
+	Pilha ->Topo=(TipoApontador2) malloc(sizeof(TipoCelula2)); 
+	Pilha ->Fundo = Pilha ->Topo; 
+	Pilha ->Topo->Prox = NULL; 
+	Pilha ->Tamanho = 0; 
+}
+
+int Vazia(TipoPilha Pilha) {
+	return ( Pilha .Topo == Pilha .Fundo) ; 
+}
+
+void Empilha(TipoItem2 x, TipoPilha *Pilha) { 
+	TipoApontador2 Aux; 
+	Aux = (TipoApontador2) malloc(sizeof(TipoCelula2)); 
+	Pilha ->Topo->Item = x; 
+	Aux->Prox = Pilha ->Topo; 
+	Pilha ->Topo = Aux; 	
+	Pilha ->Tamanho++; 
+}
+
+void Desempilha(TipoPilha *Pilha , TipoItem2 *Item) {
+	TipoApontador2 q; 
+	if (Vazia( *Pilha ) ) { 
+		printf ( "Erro : lista vazia\n" ) ; 	return; 
+	} 
+	q = Pilha ->Topo; 
+	Pilha ->Topo = q ->Prox; 
+	*Item = q ->Prox->Item; 
+	free(q) ;
+	Pilha ->Tamanho--; 
+}
+
+int Tamanho(TipoPilha Pilha) { 
+	return ( Pilha .Tamanho) ; 
+}
+
+void exibePilha(TipoPilha pilha){
+	TipoApontador2 aux=pilha.Topo->Prox;
+	while(aux!=NULL){
+		printf("\n%c", aux->Item.chave);
+		aux=aux->Prox;
+	}
+}
+//fim das estruturas de pilha
+
 void pausa(){//funçao de pausaro sistema
     int ch;
     while((ch = fgetc(stdin)) != EOF && ch != '\n');//ja limpa o buffer antes
@@ -111,6 +175,15 @@ void BFS(int **mat, int N){
 			exibe(fila); printf("\n");
 		}
 	}	//fim BFS
+}
+
+void DFS(int **mat, int N){
+	TipoItem2 i, item; TipoPilha pilha; FPVazia(&pilha);
+    int alcancado[N];
+	for(int i=0; i<N; i++)
+		alcancado[i]=0;
+    
+   	//fim DFS
 }
 
 void Dijkstra(int **mat, int N){
@@ -234,7 +307,7 @@ int main(){
 
 	while(op!=0){//laço para gerir a hora de sair do menu 
         
-        printf("\nMENU\n0- Sair\n1-Gerar matriz de grafo \n2-Executar o algoritmo bfs\n3-Executar o algoritmo deDijkstra\n4-exibe a matriz\n5-ler uma matriz do arquivo .dat\n");
+        printf("\nMENU\n0- Sair\n1-Gerar matriz de grafo \n2-Executar o algoritmo bfs\n3-Executar o algoritmo DFS\n4-Executar o algoritmo deDijkstra\n5-exibe a matriz\n6-ler uma matriz do arquivo .dat\n");
         scanf("%d",&op);
         system("clear||cls");//limpar a tela
 
@@ -269,18 +342,25 @@ int main(){
                 pausa();
                 
             break;
-			 case 3: 
+
+			case 3:
+				DFS(mat, N);
+                pausa();
+                
+            break;
+
+			 case 4: 
 				Dijkstra(mat, N);
 				printf("\n\n");
                 pausa();
                 
             break;
-			 case 4: 
+			 case 5: 
 				imprime(mat, N);
                 pausa();
                 
             break;
-			 case 5: 
+			 case 6: 
 				/*opçao para ler um arquivo .dat*/
                 
                 pausa();
