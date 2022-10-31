@@ -140,7 +140,7 @@ void imprime(int **mat, int N){
     	}
 		printf("\n");
     }
-	printf("\n");
+	printf("\n\n");
 }
 
 void BFS(int **mat, int N){
@@ -321,6 +321,33 @@ void BellmanFord(int **mat, int N){
     
 }
 
+void FloydWarshall(int **mat, int N){
+	int **d;
+	d = static_cast<int* *>(malloc(N * sizeof(int*)));//aloca a matriz dinamicamente
+	for(int i = 0; i < N; i++)
+		d[i] = static_cast<int *> (malloc(N * sizeof(int)));
+	srand(time(NULL));
+
+	for(int i=0; i<N; i++) //D ← Mat;
+		for(int j=0; j<N; j++)      
+			d[i][j]=mat[i][j];
+
+	for(int k=0; k<N; k++){	//para k de 1 até n faça
+		for(int i=0; i<N; i++) //para i de 1 até n faça
+			for(int j=0; j<N; j++)	//para j de 1 até n faça
+				if(d[i][j]>d[i][k]+d[k][j])
+					d[i][j]=d[i][k]+d[k][j];	//D[i][j] ← min(D[i][j], D[i][k] + D[k][j]);
+	
+	}	
+
+	for(int i=0; i<N; i++){
+		for(int j=0; j<N; j++){	      
+			printf("%d\t", d[i][j]);
+		}
+	printf("\n");
+	}
+}
+
 void Preenchimento(int **mat, int N, int porc, int direc, int k){
 	FILE *arq;
 
@@ -440,7 +467,7 @@ int main(){
                 
             break;
 			 case 6: 
-				/*opçao para ler um arquivo .dat*/
+				//opçao para ler um arquivo .dat
                 
                 pausa();
                 
