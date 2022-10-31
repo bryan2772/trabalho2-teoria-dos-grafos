@@ -7,14 +7,14 @@
 using namespace std;
 
 // Estrutura Pilha est�tica
-typedef struct { 
-    char chave; 
-}TipoItem2; 
+typedef struct TipoItem { 
+	int num;
+} TipoItem;
 
 typedef struct TipoCelula2 *TipoApontador2; 
 
 typedef struct TipoCelula2 { 
-	TipoItem2 Item; 
+	TipoItem Item; 
 	TipoApontador2 Prox; 
 } TipoCelula2; 
 
@@ -32,11 +32,11 @@ void FPVazia(TipoPilha *Pilha) {
 	Pilha ->Tamanho = 0; 
 }
 
-int Vazia(TipoPilha Pilha) {
+int Vazia2(TipoPilha Pilha) {
 	return ( Pilha .Topo == Pilha .Fundo) ; 
 }
 
-void Empilha(TipoItem2 x, TipoPilha *Pilha) { 
+void Empilha(TipoItem x, TipoPilha *Pilha) { 
 	TipoApontador2 Aux; 
 	Aux = (TipoApontador2) malloc(sizeof(TipoCelula2)); 
 	Pilha ->Topo->Item = x; 
@@ -45,10 +45,10 @@ void Empilha(TipoItem2 x, TipoPilha *Pilha) {
 	Pilha ->Tamanho++; 
 }
 
-void Desempilha(TipoPilha *Pilha , TipoItem2 *Item) {
+void Desempilha(TipoPilha *Pilha , TipoItem *Item) {
 	TipoApontador2 q; 
-	if (Vazia( *Pilha ) ) { 
-		printf ( "Erro : lista vazia\n" ) ; 	return; 
+	if (Vazia2( *Pilha ) ) { 
+		printf ( "Erro : pilha vazia\n" ) ; 	return; 
 	} 
 	q = Pilha ->Topo; 
 	Pilha ->Topo = q ->Prox; 
@@ -64,7 +64,7 @@ int Tamanho(TipoPilha Pilha) {
 void exibePilha(TipoPilha pilha){
 	TipoApontador2 aux=pilha.Topo->Prox;
 	while(aux!=NULL){
-		printf("\n%c", aux->Item.chave);
+		printf("\n%d", aux->Item.num);
 		aux=aux->Prox;
 	}
 }
@@ -85,9 +85,7 @@ void fflush_stdin(){//funçao que limpa o buff
 //fila
 typedef struct TipoCelula *TipoApontador; 
 
-typedef struct TipoItem { 
-	int num;
-} TipoItem;
+
 
 typedef struct TipoCelula {
 	TipoItem Item;
@@ -178,12 +176,45 @@ void BFS(int **mat, int N){
 }
 
 void DFS(int **mat, int N){
-	TipoItem2 i, item; TipoPilha pilha; FPVazia(&pilha);
+	TipoItem i, item; TipoPilha pilha; FPVazia(&pilha);
     int alcancado[N];
 	for(int i=0; i<N; i++)
 		alcancado[i]=0;
     
-   	//fim DFS
+    for(int k=0; k<N; k++)	//procura um valor para i
+		for(int j=0; j<N; j++)
+	        if(mat[j][k] != 0){
+	        	for(int l=0; l<N; l++){	
+					alcancado[j]=1;
+				}
+	        	i.num=j;
+	        	Empilha(i, &pilha); 		//enfileire i e marque-o como alcançado (visitado);
+	        	k=N; j=N;
+			}
+				/*i.num=4;
+	        	Empilha(i, &pilha);
+				alcancado[i.num]=1;*/
+
+	exibePilha(pilha); printf("\n");	//inicio BFS
+	int j=0,aux2=0;
+    while(!Vazia2(pilha)){	
+		aux2=0;	//enquanto (fila ≠ ∅)) faça
+    	i.num=pilha.Topo->Prox->Item.num;		//i ← vértice da frente da fila;
+    	for(int j=0; j<N; j++){		//∀ aresta (i,j), tal que j ainda não foi alcançado faça
+			if(mat[i.num][j]!=0 && alcancado[j]!=1){
+				alcancado[j]=1;		//marque j como alcançado;
+		    	item.num=j;
+				Empilha(item, &pilha);
+				j=N;		//enfileire j;
+				aux2=1;
+			}
+		}
+		//exibePilha(pilha); printf("\n");
+		if(aux2==0){
+			Desempilha(&pilha, &i);
+		}
+		exibePilha(pilha); printf("\n");
+	}//fim DFS
 }
 
 void Dijkstra(int **mat, int N){
@@ -424,17 +455,6 @@ int main(){
         system("clear||cls");
     }
    
-    /*int test[8][8]={0,1,1,0,1,0,0,0, 1,0,0,1,0,1,0,0, 1,0,0,1,0,0,1,0, 0,1,1,0,0,0,0,1,	1,0,0,0,0,1,1,0, 0,1,0,0,1,0,0,1, 0,0,1,0,1,0,0,1, 0,0,0,1,0,1,1,0};
-    printf("\n"); //bfs
-	int test[6][6]={0,1,1,0,0,0, 0,0,0,1,0,0, 0,0,0,0,0,1, 0,0,0,0,1,1, 1,1,0,1,0,0, 0,0,1,0,1,0};
-	int test[5][5]={0,50,30,100,10, 0,0,0,0,0, 0,5,0,50,0, 0,20,0,0,0, 0,0,0,10,0};
-    for(int i=0; i<5; i++){
-		for(int j=0; j<5; j++){	      
-	        printf("%d\t", test[i][j]);
-    	}
-		printf("\n");	
-    }*/
-
     printf("\nfim\n");
 	
 	return 0;
