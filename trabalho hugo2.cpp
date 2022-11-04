@@ -305,53 +305,59 @@ void Dijkstra(int **mat, int N){
 	int c[N], d[N], i, pos = 0, menor = 1001, v, l = 0, w, tam = 0;
 	for (int i = 0; i < N; i++)
 		c[i] = d[i] = 0;
-	for (int k = 0; k < N; k++) // procura um valor para i
+	/*for (int k = 0; k < N; k++) // procura um valor para i
 		for (int j = 0; j < N; j++)
 			if (mat[k][j] != 0){
 				i = k;
 				k = N;
 				j = N;
-			}
+			}*/
 
-	for (int j = 0; j < N; j++) // inicio dijkstra
-		if (mat[i][j] != 0){ // C ← {V – {i}};
-			c[pos] = j;
-			pos++;
-			tam++;
+	for(int id=0; id<N; id++){
+		i=id;
+		for (int i = 0; i < N; i++)
+			c[i] = d[i] = 0;
+		pos = 0, menor = 1001, l = 0, tam = 0;	
+		for (int j = 0; j < N; j++) // inicio dijkstra
+			if (mat[i][j] != 0){ // C ← {V – {i}};
+				c[pos] = j;
+				pos++;
+				tam++;
+			}
+		for (int j = 0; j < N; j++){						// para j de 1 até n faça
+			if (mat[i][j] == 0) // D[ j ] ← Mat[i][j];
+				d[j] = 2000000000;
+			else
+				d[j] = mat[i][j];
 		}
-	for (int j = 0; j < N; j++){						// para j de 1 até n faça
-		if (mat[i][j] == 0) // D[ j ] ← Mat[i][j];
-			d[j] = 2000000000;
-		else
-			d[j] = mat[i][j];
+		for (int k = 0; k < (N - 2); k++){ // repita n – 2 vezes
+			menor = 1001;
+			l = 0;
+			for (int i = 0; i < N; i++){ // v ← elemento de C que minimiza D[v];
+				if (d[i] < menor && c[l] != -1){
+					menor = d[i];
+					pos = i;
+				}
+				if (d[i] <= 1000)
+					l++;
+			} //
+			v = pos;
+			for (int i = 0; i < tam; i++)
+				if (c[i] == v){ // C ← C – {v};
+					c[i] = -1;
+				}
+			for (int i = 0; i < tam; i++){ // para cada elemento w ∈ C faça
+				if (c[i] != -1){
+					w = c[i];
+					if (mat[v][w] == 0) // D[w] ← min(D[w], D[v] + Mat[v][w])
+						mat[v][w] = 2000000000;
+					if (d[w] > (d[v] + mat[v][w]))
+						d[w] = d[v] + mat[v][w];
+					// d[w]=min_element(d[w], d[v] + mat[v][w]);
+				}
+			}
+		} // fim dijkstra
 	}
-	for (int k = 0; k < (N - 2); k++){ // repita n – 2 vezes
-		menor = 1001;
-		l = 0;
-		for (int i = 0; i < N; i++){ // v ← elemento de C que minimiza D[v];
-			if (d[i] < menor && c[l] != -1){
-				menor = d[i];
-				pos = i;
-			}
-			if (d[i] <= 1000)
-				l++;
-		} //
-		v = pos;
-		for (int i = 0; i < tam; i++)
-			if (c[i] == v){ // C ← C – {v};
-				c[i] = -1;
-			}
-		for (int i = 0; i < tam; i++){ // para cada elemento w ∈ C faça
-			if (c[i] != -1){
-				w = c[i];
-				if (mat[v][w] == 0) // D[w] ← min(D[w], D[v] + Mat[v][w])
-					mat[v][w] = 2000000000;
-				if (d[w] > (d[v] + mat[v][w]))
-					d[w] = d[v] + mat[v][w];
-				// d[w]=min_element(d[w], d[v] + mat[v][w]);
-			}
-		}
-	} // fim dijkstra
 
 	/*printf("\nc: ");
 	for (int i = 0; i < N; i++)
