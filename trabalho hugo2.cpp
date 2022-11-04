@@ -188,8 +188,6 @@ void BFS(int **mat, int N,int ordem){
 				k = N;
 				j = N;
 			}
-	//exibe(fila);
-	//printf("\n"); // inicio BFS
 
 	if(ordem==1){
 		while (!Vazia(fila)){										 // enquanto (fila ≠ ∅)) faça
@@ -203,8 +201,6 @@ void BFS(int **mat, int N,int ordem){
 					item.num = j;
 					Enfileira(item, &fila); // enfileire j;
 				}
-				//exibe(fila);
-				//printf("\n");
 			}
 		} // fim BFS
 	}else{
@@ -219,8 +215,6 @@ void BFS(int **mat, int N,int ordem){
 					item.num = j;
 					Enfileira(item, &fila); // enfileire j;
 				}
-				//exibe(fila);
-				//printf("\n");
 			}
 		} // fim BFS decrecente
 	}
@@ -248,19 +242,14 @@ void DFS(int **mat, int N,int ordem)
 				k = N;
 				j = N;
 			}
-	/*i.num=4;
-	Empilha(i, &pilha);
-	alcancado[i.num]=1;*/
-
-	//exibePilha(pilha);
-	//printf("\n"); // inicio BFS
+	
+	// inicio BFS
 	int j = 0, aux2 = 0;
 	if(ordem==1){
 		while (!Vazia2(pilha)){
 			aux2 = 0;							// enquanto (fila ≠ ∅)) faça
 			i.num = pilha.Topo->Prox->Item.num; // i ← vértice da frente da fila;
-			for (int j = 0; j < N; j++)
-			{ //∀ aresta (i,j), tal que j ainda não foi alcançado faça
+			for (int j = 0; j < N; j++){ //∀ aresta (i,j), tal que j ainda não foi alcançado faça
 				if (mat[i.num][j] != 0 && alcancado[j] != 1)
 				{
 					alcancado[j] = 1; // marque j como alcançado;
@@ -270,12 +259,10 @@ void DFS(int **mat, int N,int ordem)
 					aux2 = 1;
 				}
 			}
-			// exibePilha(pilha);
 			if (aux2 == 0)
 			{
 				Desempilha(&pilha, &i);
 			}
-			//exibePilha(pilha);
 		} // fim DFS
 	}else{
 		while (!Vazia2(pilha)){
@@ -291,12 +278,10 @@ void DFS(int **mat, int N,int ordem)
 					aux2 = 1;
 				}
 			}
-			// exibePilha(pilha);
 			if (aux2 == 0)
 			{
 				Desempilha(&pilha, &i);
 			}
-			//exibePilha(pilha);
 		} // fim DFS
 	}
 }
@@ -305,13 +290,6 @@ void Dijkstra(int **mat, int N){
 	int c[N], d[N], i, pos = 0, menor = 1001, v, l = 0, w, tam = 0;
 	for (int i = 0; i < N; i++)
 		c[i] = d[i] = 0;
-	/*for (int k = 0; k < N; k++) // procura um valor para i
-		for (int j = 0; j < N; j++)
-			if (mat[k][j] != 0){
-				i = k;
-				k = N;
-				j = N;
-			}*/
 
 	for(int id=0; id<N; id++){
 		i=id;
@@ -358,28 +336,11 @@ void Dijkstra(int **mat, int N){
 			}
 		} // fim dijkstra
 	}
-
-	/*printf("\nc: ");
-	for (int i = 0; i < N; i++)
-		printf("%d ", c[i]);
-	printf("\nd: ");
-	for (int i = 0; i < N; i++)
-		printf("%d ", d[i]);*/
 }
 
 void BellmanFord(int **mat, int N){
 	int d[N], i, v, cont = 0, vet[N];
 
-	/*for (int i = 0; i < N; i++)
-		d[i] = vet[i] = 0;
-	for (int k = 0; k < N; k++) // procura um valor para i
-		for (int j = 0; j < N; j++)
-			if (mat[k][j] != 0){
-				i = v = k;
-				vet[v] = 1;
-				k = N;
-				j = N;
-			}*/
 	for(int id=0; id<N; id++){
 		i = v;
 		vet[v] = 1;
@@ -405,9 +366,6 @@ void BellmanFord(int **mat, int N){
 					}
 				}
 
-				/*printf("\n");
-				for (int i = 0; i < N; i++)
-					printf("%d ", d[i]);*/
 			}
 			for (int i = 0; i < N; i++)
 				if (vet[i] != 1)
@@ -440,12 +398,6 @@ void FloydWarshall(int **mat, int N){
 					d[i][j] = d[i][k] + d[k][j]; // D[i][j] ← min(D[i][j], D[i][k] + D[k][j]);
 	}
 
-	/*for (int i = 0; i < N; i++){
-		for (int j = 0; j < N; j++){
-			printf("%d\t", d[i][j]);
-		}
-		printf("\n");
-	}*/
 }
 
 void Preenchimento(int **mat, int N, int porc, int direc, int k){
