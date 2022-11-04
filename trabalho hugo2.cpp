@@ -76,6 +76,7 @@ void exibePilha(TipoPilha pilha)
 		printf("\n%d", aux->Item.num);
 		aux = aux->Prox;
 	}
+	printf("\n");
 }
 // fim das estruturas de pilha
 
@@ -151,6 +152,7 @@ void exibe(TipoFila fila)
 		printf("%d ", aux->Item.num);
 		aux = aux->Prox;
 	}
+	printf("\n");
 }
 // fim fila
 
@@ -186,8 +188,8 @@ void BFS(int **mat, int N,int ordem){
 				k = N;
 				j = N;
 			}
-	exibe(fila);
-	printf("\n"); // inicio BFS
+	//exibe(fila);
+	//printf("\n"); // inicio BFS
 
 	if(ordem==1){
 		while (!Vazia(fila)){										 // enquanto (fila ≠ ∅)) faça
@@ -201,8 +203,8 @@ void BFS(int **mat, int N,int ordem){
 					item.num = j;
 					Enfileira(item, &fila); // enfileire j;
 				}
-				exibe(fila);
-				printf("\n");
+				//exibe(fila);
+				//printf("\n");
 			}
 		} // fim BFS
 	}else{
@@ -217,8 +219,8 @@ void BFS(int **mat, int N,int ordem){
 					item.num = j;
 					Enfileira(item, &fila); // enfileire j;
 				}
-				exibe(fila);
-				printf("\n");
+				//exibe(fila);
+				//printf("\n");
 			}
 		} // fim BFS decrecente
 	}
@@ -250,8 +252,8 @@ void DFS(int **mat, int N,int ordem)
 	Empilha(i, &pilha);
 	alcancado[i.num]=1;*/
 
-	exibePilha(pilha);
-	printf("\n"); // inicio BFS
+	//exibePilha(pilha);
+	//printf("\n"); // inicio BFS
 	int j = 0, aux2 = 0;
 	if(ordem==1){
 		while (!Vazia2(pilha)){
@@ -268,13 +270,12 @@ void DFS(int **mat, int N,int ordem)
 					aux2 = 1;
 				}
 			}
-			// exibePilha(pilha); printf("\n");
+			// exibePilha(pilha);
 			if (aux2 == 0)
 			{
 				Desempilha(&pilha, &i);
 			}
-			exibePilha(pilha);
-			printf("\n");
+			//exibePilha(pilha);
 		} // fim DFS
 	}else{
 		while (!Vazia2(pilha)){
@@ -290,13 +291,12 @@ void DFS(int **mat, int N,int ordem)
 					aux2 = 1;
 				}
 			}
-			// exibePilha(pilha); printf("\n");
+			// exibePilha(pilha);
 			if (aux2 == 0)
 			{
 				Desempilha(&pilha, &i);
 			}
-			exibePilha(pilha);
-			printf("\n");
+			//exibePilha(pilha);
 		} // fim DFS
 	}
 }
@@ -321,7 +321,7 @@ void Dijkstra(int **mat, int N){
 		}
 	for (int j = 0; j < N; j++){						// para j de 1 até n faça
 		if (mat[i][j] == 0) // D[ j ] ← Mat[i][j];
-			d[j] = 2147483647;
+			d[j] = 2000000000;
 		else
 			d[j] = mat[i][j];
 	}
@@ -353,12 +353,12 @@ void Dijkstra(int **mat, int N){
 		}
 	} // fim dijkstra
 
-	printf("\nc: ");
+	/*printf("\nc: ");
 	for (int i = 0; i < N; i++)
 		printf("%d ", c[i]);
 	printf("\nd: ");
 	for (int i = 0; i < N; i++)
-		printf("%d ", d[i]);
+		printf("%d ", d[i]);*/
 }
 
 void BellmanFord(int **mat, int N){
@@ -393,9 +393,9 @@ void BellmanFord(int **mat, int N){
 				}
 			}
 
-			printf("\n");
+			/*printf("\n");
 			for (int i = 0; i < N; i++)
-				printf("%d ", d[i]);
+				printf("%d ", d[i]);*/
 		}
 		for (int i = 0; i < N; i++)
 			if (vet[i] != 1)
@@ -427,12 +427,12 @@ void FloydWarshall(int **mat, int N){
 					d[i][j] = d[i][k] + d[k][j]; // D[i][j] ← min(D[i][j], D[i][k] + D[k][j]);
 	}
 
-	for (int i = 0; i < N; i++){
+	/*for (int i = 0; i < N; i++){
 		for (int j = 0; j < N; j++){
 			printf("%d\t", d[i][j]);
 		}
 		printf("\n");
-	}
+	}*/
 }
 
 void Preenchimento(int **mat, int N, int porc, int direc, int k){
@@ -495,7 +495,7 @@ int main(){
 
 	while (op != 0){ // laço para gerir a hora de sair do menu
 
-		printf("\nMENU\n0- Sair\n1-Gerar matriz de grafo \n2-Executar o algoritmo bfs e DFS\n3-Executar o algoritmo bellmanford\n4-Executar o algoritmo de Dijkstra\n5-Executar o algoritmo de FloydWarshall\n6-exibe a matriz\n7-ler uma matriz do arquivo .dat\n");
+		printf("\nMENU\n0- Sair\n1-Gerar matriz de grafo \n2-Executar o algoritmo BFS e DFS\n3-Executar o algoritmo bellmanford\n4-Executar o algoritmo de Dijkstra\n5-Executar o algoritmo de FloydWarshall\n6-exibe a matriz\n7-ler uma matriz do arquivo .dat\n");
 		scanf("%d", &op);
 		system("clear||cls"); // limpar a tela
 
@@ -545,7 +545,7 @@ int main(){
 			Preenchimento(mat, N, porcentagem, direcionado, k); // gera a matriz
 			t = clock()-t;
 			printf("\nTempo de geraçao do grafo em segundos : %.19f\n", ((double)t)/((CLOCKS_PER_SEC)));
-			imprime(mat, N);
+			//imprime(mat, N);
 			pausa();
 			break;
 
@@ -612,7 +612,7 @@ int main(){
 
 			fscanf(arq2, "%d", &N); // de 3 a 10000000
 			fscanf(arq2, "%d", &porcentagem); // 0.2 a 1
-			free(mat);
+			//free(mat);
 
 			mat = static_cast<int **>(malloc(N * sizeof(int *))); // aloca a matriz dinamicamente
 			for(int i = 0; i < N; i++)
@@ -636,7 +636,7 @@ int main(){
 			d=porcentagem/k;//porcentagem = k * d; // calcula a quantidade de arestas com base na porcentagem
 			printf("\nTempo de leitura do grafo.dat em segundos : %.19f", ((double)t)/((CLOCKS_PER_SEC)));
 			printf("\narestas:%d quantidade da porcentagem:%d\n", k, porcentagem);
-			imprime(mat, N);
+			//imprime(mat, N);
 			pausa();
 			fclose(arq2);
 			break;
