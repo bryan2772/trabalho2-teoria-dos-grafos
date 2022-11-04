@@ -370,7 +370,7 @@ void Dijkstra(int **mat, int N){
 void BellmanFord(int **mat, int N){
 	int d[N], i, v, cont = 0, vet[N];
 
-	for (int i = 0; i < N; i++)
+	/*for (int i = 0; i < N; i++)
 		d[i] = vet[i] = 0;
 	for (int k = 0; k < N; k++) // procura um valor para i
 		for (int j = 0; j < N; j++)
@@ -379,39 +379,46 @@ void BellmanFord(int **mat, int N){
 				vet[v] = 1;
 				k = N;
 				j = N;
-			}
-
-	for (int j = 0; j < N; j++)
-		d[j] = 2000000000;
-	d[i] = 0;
-	for (int j = 0; j < N - 1; j++){
-		for (int w = 0; w < N; w++){
-			if (mat[v][w] != 0){
-				if (mat[v][w] == 0){ // D[w] ← min(D[w], D[v] + Mat[v][w])
-					mat[v][w] = 2000000000;
-					cont = 1;
-				}
-				if (d[w] > (d[v] + mat[v][w]))
-					d[w] = d[v] + mat[v][w];
-				if (cont == 1){
-					mat[v][w] = 0;
-					cont = 0;
-				}
-			}
-
-			/*printf("\n");
-			for (int i = 0; i < N; i++)
-				printf("%d ", d[i]);*/
-		}
+			}*/
+	for(int id=0; id<N; id++){
+		i = v;
+		vet[v] = 1;
+		cont = 0;
 		for (int i = 0; i < N; i++)
-			if (vet[i] != 1)
-				for (int j = 0; j < N; j++)
-					if (mat[i][j] != 0){
-						v = i;
-						vet[v] = 1;
-						i = N;
-						j = N;
+			vet[i] = 0;		
+
+		for (int j = 0; j < N; j++)
+			d[j] = 2000000000;
+		d[i] = 0;
+		for (int j = 0; j < N - 1; j++){
+			for (int w = 0; w < N; w++){
+				if (mat[v][w] != 0){
+					if (mat[v][w] == 0){ // D[w] ← min(D[w], D[v] + Mat[v][w])
+						mat[v][w] = 2000000000;
+						cont = 1;
 					}
+					if (d[w] > (d[v] + mat[v][w]))
+						d[w] = d[v] + mat[v][w];
+					if (cont == 1){
+						mat[v][w] = 0;
+						cont = 0;
+					}
+				}
+
+				/*printf("\n");
+				for (int i = 0; i < N; i++)
+					printf("%d ", d[i]);*/
+			}
+			for (int i = 0; i < N; i++)
+				if (vet[i] != 1)
+					for (int j = 0; j < N; j++)
+						if (mat[i][j] != 0){
+							v = i;
+							vet[v] = 1;
+							i = N;
+							j = N;
+						}
+		}
 	}
 }
 
@@ -501,7 +508,7 @@ int main(){
 
 	while (op != 0){ // laço para gerir a hora de sair do menu
 
-		printf("\nMENU\n0- Sair\n1-Gerar matriz de grafo \n2-Executar o algoritmo BFS e DFS\n3-Executar o algoritmo bellmanford\n4-Executar o algoritmo de Dijkstra\n5-Executar o algoritmo de FloydWarshall\n6-exibe a matriz\n7-ler uma matriz do arquivo .dat\n");
+		printf("\nMENU\n0- Sair\n1-Gerar matriz de grafo \n2-Executar o algoritmo BFS e DFS\n3-Executar o algoritmo Bellman-Ford\n4-Executar o algoritmo de Dijkstra\n5-Executar o algoritmo de Floyd-Warshall\n6-exibe a matriz\n7-ler uma matriz do arquivo .dat\n");
 		scanf("%d", &op);
 		system("clear||cls"); // limpar a tela
 
@@ -576,8 +583,8 @@ int main(){
 			t = clock();
 				BellmanFord(mat, N);
 			t = clock()-t;
-			printf("\nTempo de execucao do BellmanFord em segundos : %.19f\n", ((double)t)/((CLOCKS_PER_SEC)));
-			printf("Tempo de execucao do BellmanFord em milessegundos: %.19f\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
+			printf("\nTempo de execucao do Bellman-Ford em segundos : %.19f\n", ((double)t)/((CLOCKS_PER_SEC)));
+			printf("Tempo de execucao do Bellman-Ford em milessegundos: %.19f\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
 			pausa();
 			break;
 
@@ -595,8 +602,8 @@ int main(){
 			t = clock();
 				FloydWarshall(mat, N);
 			t = clock()-t;
-			printf("\nTempo de execucao do FloydWarshall em segundos : %.19f\n", ((double)t)/((CLOCKS_PER_SEC)));
-			printf("Tempo de execucao do FloydWarshall em milessegundos: %.19f\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
+			printf("\nTempo de execucao do Floyd-Warshall em segundos : %.19f\n", ((double)t)/((CLOCKS_PER_SEC)));
+			printf("Tempo de execucao do Floyd-Warshall em milessegundos: %.19f\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
 			pausa();
 			break;
 
