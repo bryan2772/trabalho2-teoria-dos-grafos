@@ -3,7 +3,7 @@
 #include <time.h>
 #include <string.h>
 
-// Estrutura Pilha est�tica
+// Estrutura Pilha estatica
 typedef struct TipoItem
 {
 	int num;
@@ -23,7 +23,7 @@ typedef struct
 	int Tamanho;
 } TipoPilha;
 
-// Fun��es de manipula��o da pilha din�mica
+// Funcoes de manipulacao da pilha dinamica
 
 void FPVazia(TipoPilha *Pilha)
 {
@@ -81,7 +81,7 @@ void exibePilha(TipoPilha pilha)
 // fim das estruturas de pilha
 
 void pausa()
-{ // funçao de pausaro sistema
+{ // funçao de pausar o sistema
 	int ch;
 	while ((ch = fgetc(stdin)) != EOF && ch != '\n')
 		; // ja limpa o buffer antes
