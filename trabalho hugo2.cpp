@@ -4,42 +4,36 @@
 #include <string.h>
 
 // Estrutura Pilha estatica
-typedef struct TipoItem
-{
+typedef struct TipoItem{
 	int num;
 } TipoItem;
 
 typedef struct TipoCelula2 *TipoApontador2;
 
-typedef struct TipoCelula2
-{
+typedef struct TipoCelula2{
 	TipoItem Item;
 	TipoApontador2 Prox;
 } TipoCelula2;
 
-typedef struct
-{
+typedef struct{
 	TipoApontador2 Fundo, Topo;
 	int Tamanho;
 } TipoPilha;
 
 // Funcoes de manipulacao da pilha dinamica
 
-void FPVazia(TipoPilha *Pilha)
-{
+void FPVazia(TipoPilha *Pilha){
 	Pilha->Topo = (TipoApontador2)malloc(sizeof(TipoCelula2));
 	Pilha->Fundo = Pilha->Topo;
 	Pilha->Topo->Prox = NULL;
 	Pilha->Tamanho = 0;
 }
 
-int Vazia2(TipoPilha Pilha)
-{
+int Vazia2(TipoPilha Pilha){
 	return (Pilha.Topo == Pilha.Fundo);
 }
 
-void Empilha(TipoItem x, TipoPilha *Pilha)
-{
+void Empilha(TipoItem x, TipoPilha *Pilha){
 	TipoApontador2 Aux;
 	Aux = (TipoApontador2)malloc(sizeof(TipoCelula2));
 	Pilha->Topo->Item = x;
@@ -48,8 +42,7 @@ void Empilha(TipoItem x, TipoPilha *Pilha)
 	Pilha->Tamanho++;
 }
 
-void Desempilha(TipoPilha *Pilha, TipoItem *Item)
-{
+void Desempilha(TipoPilha *Pilha, TipoItem *Item){
 	TipoApontador2 q;
 	if (Vazia2(*Pilha))
 	{
@@ -63,16 +56,13 @@ void Desempilha(TipoPilha *Pilha, TipoItem *Item)
 	Pilha->Tamanho--;
 }
 
-int Tamanho(TipoPilha Pilha)
-{
+int Tamanho(TipoPilha Pilha){
 	return (Pilha.Tamanho);
 }
 
-void exibePilha(TipoPilha pilha)
-{
+void exibePilha(TipoPilha pilha){
 	TipoApontador2 aux = pilha.Topo->Prox;
-	while (aux != NULL)
-	{
+	while (aux != NULL){
 		printf("\n%d", aux->Item.num);
 		aux = aux->Prox;
 	}
@@ -80,8 +70,7 @@ void exibePilha(TipoPilha pilha)
 }
 // fim das estruturas de pilha
 
-void pausa()
-{ // funçao de pausar o sistema
+void pausa(){ // funçao de pausar o sistema
 	int ch;
 	while ((ch = fgetc(stdin)) != EOF && ch != '\n')
 		; // ja limpa o buffer antes
@@ -89,8 +78,7 @@ void pausa()
 	scanf("%*c"); // não PRECISO LIMPAR O BUFFER porque O USUARIO não VAI DIGITAR NADA
 }
 
-void fflush_stdin()
-{ // funçao que limpa o buff
+void fflush_stdin(){ // funçao que limpa o buff
 	int ch;
 	while ((ch = getchar()) != '\n' && ch != EOF)
 		;
@@ -99,42 +87,35 @@ void fflush_stdin()
 // fila
 typedef struct TipoCelula *TipoApontador;
 
-typedef struct TipoCelula
-{
+typedef struct TipoCelula{
 	TipoItem Item;
 	TipoApontador Prox;
 } TipoCelula;
 
-typedef struct TipoFila
-{
+typedef struct TipoFila{
 	TipoApontador Frente, Tras;
 } TipoFila;
 
-void FFVazia(TipoFila *Fila)
-{
+void FFVazia(TipoFila *Fila){
 	Fila->Frente = (TipoApontador)malloc(sizeof(TipoCelula));
 	Fila->Tras = Fila->Frente;
 	Fila->Frente->Prox = NULL;
 }
 
-int Vazia(TipoFila Fila)
-{
+int Vazia(TipoFila Fila){
 	return (Fila.Frente == Fila.Tras);
 }
 
-void Enfileira(TipoItem x, TipoFila *Fila)
-{
+void Enfileira(TipoItem x, TipoFila *Fila){
 	Fila->Tras->Prox = (TipoApontador)malloc(sizeof(TipoCelula));
 	Fila->Tras = Fila->Tras->Prox;
 	Fila->Tras->Item = x;
 	Fila->Tras->Prox = NULL;
 }
 
-void Desenfileira(TipoFila *Fila, TipoItem *Item)
-{
+void Desenfileira(TipoFila *Fila, TipoItem *Item){
 	TipoApontador q;
-	if (Vazia(*Fila))
-	{
+	if (Vazia(*Fila)){
 		printf("Erro fila esta vazia\n");
 		return;
 	}
@@ -144,11 +125,9 @@ void Desenfileira(TipoFila *Fila, TipoItem *Item)
 	free(q);
 }
 
-void exibe(TipoFila fila)
-{
+void exibe(TipoFila fila){
 	TipoApontador aux = fila.Frente->Prox;
-	while (aux != NULL)
-	{
+	while (aux != NULL){
 		printf("%d ", aux->Item.num);
 		aux = aux->Prox;
 	}
@@ -156,12 +135,9 @@ void exibe(TipoFila fila)
 }
 // fim fila
 
-void imprime(int **mat, int N)
-{
-	for (int i = 0; i < N; i++)
-	{
-		for (int j = 0; j < N; j++)
-		{
+void imprime(int **mat, int N){
+	for (int i = 0; i < N; i++){
+		for (int j = 0; j < N; j++){
 			printf("%d\t", mat[i][j]);
 		}
 		printf("\n");
@@ -193,10 +169,8 @@ void BFS(int **mat, int N,int ordem){
 		while (!Vazia(fila)){										 // enquanto (fila ≠ ∅)) faça
 			i.num = fila.Frente->Prox->Item.num; // i ← vértice da frente da fila;
 			Desenfileira(&fila, &i);			 // desenfileire i;
-			for (int j = 0; j < N; j++)
-			{ //∀ aresta (i,j), tal que j ainda não foi alcançado faça
-				if (mat[i.num][j] != 0 && alcancado[j] != 1)
-				{
+			for (int j = 0; j < N; j++){ //∀ aresta (i,j), tal que j ainda não foi alcançado faça
+				if (mat[i.num][j] != 0 && alcancado[j] != 1){
 					alcancado[j] = 1; // marque j como alcançado;
 					item.num = j;
 					Enfileira(item, &fila); // enfileire j;
@@ -207,10 +181,8 @@ void BFS(int **mat, int N,int ordem){
 		while (!Vazia(fila)){										 // enquanto (fila ≠ ∅)) faça
 			i.num = fila.Frente->Prox->Item.num; // i ← vértice da frente da fila;
 			Desenfileira(&fila, &i);			 // desenfileire i;
-			for (int j = N-1; j >= 0; j--)
-			{ //∀ aresta (i,j), tal que j ainda não foi alcançado faça
-				if (mat[i.num][j] != 0 && alcancado[j] != 1)
-				{
+			for (int j = N-1; j >= 0; j--){ //∀ aresta (i,j), tal que j ainda não foi alcançado faça
+				if (mat[i.num][j] != 0 && alcancado[j] != 1){
 					alcancado[j] = 1; // marque j como alcançado;
 					item.num = j;
 					Enfileira(item, &fila); // enfileire j;
@@ -220,8 +192,7 @@ void BFS(int **mat, int N,int ordem){
 	}
 }
 
-void DFS(int **mat, int N,int ordem)
-{
+void DFS(int **mat, int N,int ordem){
 	TipoItem i, item;
 	TipoPilha pilha;
 	FPVazia(&pilha);
@@ -231,10 +202,8 @@ void DFS(int **mat, int N,int ordem)
 
 	for (int k = 0; k < N; k++) // procura um valor para i
 		for (int j = 0; j < N; j++)
-			if (mat[j][k] != 0)
-			{
-				for (int l = 0; l < N; l++)
-				{
+			if (mat[j][k] != 0){
+				for (int l = 0; l < N; l++){
 					alcancado[j] = 1;
 				}
 				i.num = j;
@@ -250,26 +219,6 @@ void DFS(int **mat, int N,int ordem)
 			aux2 = 0;							// enquanto (fila ≠ ∅)) faça
 			i.num = pilha.Topo->Prox->Item.num; // i ← vértice da frente da fila;
 			for (int j = 0; j < N; j++){ //∀ aresta (i,j), tal que j ainda não foi alcançado faça
-				if (mat[i.num][j] != 0 && alcancado[j] != 1)
-				{
-					alcancado[j] = 1; // marque j como alcançado;
-					item.num = j;
-					Empilha(item, &pilha);
-					j = N; // enfileire j;
-					aux2 = 1;
-				}
-			}
-			if (aux2 == 0)
-			{
-				Desempilha(&pilha, &i);
-			}
-		} // fim DFS
-	}else{
-		while (!Vazia2(pilha)){
-			aux2 = 0;							// enquanto (fila ≠ ∅)) faça
-			i.num = pilha.Topo->Prox->Item.num; // i ← vértice da frente da fila;
-			for (int j = N-1; j >= 0; j--)
-			{ //∀ aresta (i,j), tal que j ainda não foi alcançado faça
 				if (mat[i.num][j] != 0 && alcancado[j] != 1){
 					alcancado[j] = 1; // marque j como alcançado;
 					item.num = j;
@@ -278,8 +227,24 @@ void DFS(int **mat, int N,int ordem)
 					aux2 = 1;
 				}
 			}
-			if (aux2 == 0)
-			{
+			if (aux2 == 0){
+				Desempilha(&pilha, &i);
+			}
+		} // fim DFS
+	}else{
+		while (!Vazia2(pilha)){
+			aux2 = 0;							// enquanto (fila ≠ ∅)) faça
+			i.num = pilha.Topo->Prox->Item.num; // i ← vértice da frente da fila;
+			for (int j = N-1; j >= 0; j--){ //∀ aresta (i,j), tal que j ainda não foi alcançado faça
+				if (mat[i.num][j] != 0 && alcancado[j] != 1){
+					alcancado[j] = 1; // marque j como alcançado;
+					item.num = j;
+					Empilha(item, &pilha);
+					j = N; // enfileire j;
+					aux2 = 1;
+				}
+			}
+			if (aux2 == 0){
 				Desempilha(&pilha, &i);
 			}
 		} // fim DFS
@@ -327,11 +292,9 @@ void Dijkstra(int **mat, int N){
 			for (int i = 0; i < tam; i++){ // para cada elemento w ∈ C faça
 				if (c[i] != -1){
 					w = c[i];
-					if (mat[v][w] == 0) // D[w] ← min(D[w], D[v] + Mat[v][w])
-						mat[v][w] = 2000000000;
-					if (d[w] > (d[v] + mat[v][w]))
-						d[w] = d[v] + mat[v][w];
-					// d[w]=min_element(d[w], d[v] + mat[v][w]);
+					if(mat[v][w]!=0)	// D[w] ← min(D[w], D[v] + Mat[v][w])
+						if (d[w] > (d[v] + mat[v][w]))
+							d[w] = d[v] + mat[v][w];
 				}
 			}
 		} // fim dijkstra
@@ -339,12 +302,11 @@ void Dijkstra(int **mat, int N){
 }
 
 void BellmanFord(int **mat, int N){
-	int d[N], i, v, cont = 0, vet[N];
+	int d[N], i, v, vet[N];
 
 	for(int id=0; id<N; id++){
 		i = v;
 		vet[v] = 1;
-		cont = 0;
 		for (int i = 0; i < N; i++)
 			vet[i] = 0;		
 
@@ -354,16 +316,8 @@ void BellmanFord(int **mat, int N){
 		for (int j = 0; j < N - 1; j++){
 			for (int w = 0; w < N; w++){
 				if (mat[v][w] != 0){
-					if (mat[v][w] == 0){ // D[w] ← min(D[w], D[v] + Mat[v][w])
-						mat[v][w] = 2000000000;
-						cont = 1;
-					}
-					if (d[w] > (d[v] + mat[v][w]))
+					if (d[w] > (d[v] + mat[v][w])) // D[w] ← min(D[w], D[v] + Mat[v][w])
 						d[w] = d[v] + mat[v][w];
-					if (cont == 1){
-						mat[v][w] = 0;
-						cont = 0;
-					}
 				}
 
 			}
@@ -388,12 +342,17 @@ void FloydWarshall(int **mat, int N){
 	srand(time(NULL));
 
 	for (int i = 0; i < N; i++) // D ← Mat;
-		for (int j = 0; j < N; j++)
-			d[i][j] = mat[i][j];
+		for (int j = 0; j < N; j++){
+			if(mat[i][j]==0){
+				d[i][j] = 2000000;
+			}else{
+				d[i][j] = mat[i][j];
+			}
+		}
 
-	for (int k = 0; k < N; k++){									// para k de 1 até n faça
-		for (int i = 0; i < N; i++)		// para i de 1 até n faça
-			for (int j = 0; j < N; j++) // para j de 1 até n faça
+	for (int k = 0; k < N; k++){			// para k de 1 até n faça
+		for (int i = 0; i < N; i++)				// para i de 1 até n faça
+			for (int j = 0; j < N; j++)				// para j de 1 até n faça
 				if (d[i][j] > d[i][k] + d[k][j])
 					d[i][j] = d[i][k] + d[k][j]; // D[i][j] ← min(D[i][j], D[i][k] + D[k][j]);
 	}
@@ -498,8 +457,7 @@ int main(){
 			srand(time(NULL));
 
 			for (int i = 0; i < N; i++){ // zera toda a matriz
-				for (int j = 0; j < N; j++)
-				{
+				for (int j = 0; j < N; j++){
 					mat[i][j] = 0;
 				}
 			}
@@ -541,6 +499,7 @@ int main(){
 			break;
 
 		case 4:
+
 			t = clock();
 				Dijkstra(mat, N);
 			t = clock()-t;
