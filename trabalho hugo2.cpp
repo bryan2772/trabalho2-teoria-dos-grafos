@@ -305,7 +305,7 @@ void BellmanFord(int **mat, int N){
 	int d[N], i, v, vet[N];
 
 	for(int id=0; id<N; id++){
-		i = v;
+		i = v = id;
 		for (int i = 0; i < N; i++)
 			vet[i] = 0;		
 		vet[v] = 1;
