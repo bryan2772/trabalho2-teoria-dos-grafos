@@ -306,10 +306,10 @@ void BellmanFord(int **mat, int N){
 
 	for(int id=0; id<N; id++){
 		i = v;
-		vet[v] = 1;
 		for (int i = 0; i < N; i++)
 			vet[i] = 0;		
-
+		vet[v] = 1;
+		
 		for (int j = 0; j < N; j++)
 			d[j] = 2000000000;
 		d[i] = 0;
@@ -359,7 +359,7 @@ void FloydWarshall(int **mat, int N){
 
 }
 
-void Preenchimento(int **mat, int N, int porc, int direc, int k){
+void geraGrafos(int **mat, int N, int porc, int direc, int k){
 	FILE *arq;
 
 	arq = fopen("graph.dat", "wb");
@@ -465,7 +465,7 @@ int main(){
 			k = ((N * N) - N) / 2;
 			porcentagem = k * d; // calcula a quantidade de arestas com base na porcentagem
 			printf("\n%d %d\n", k, porcentagem);
-			Preenchimento(mat, N, porcentagem, direcionado, k); // gera a matriz
+			geraGrafos(mat, N, porcentagem, direcionado, k); // gera a matriz
 			t = clock()-t;
 			printf("\nTempo de geraçao do grafo em segundos : %.19f\n", ((double)t)/((CLOCKS_PER_SEC)));
 			//imprime(mat, N);
