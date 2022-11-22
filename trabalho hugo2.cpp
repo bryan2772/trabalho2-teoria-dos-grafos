@@ -310,11 +310,11 @@ void BellmanFord(int **mat, int N){
 			vet[i] = 0;		
 		vet[v] = 1;
 		
-		for (int j = 0; j < N; j++)
-			d[j] = 2000000000;
-		d[i] = 0;
-		for (int j = 0; j < N - 1; j++){
-			for (int w = 0; w < N; w++){
+		for (int j = 0; j < N; j++)		//para j de 1 até n faça
+			d[j] = 2000000000;		//D[ j ] ← ∞;
+		d[i] = 0;		//D[i] ← 0;
+		for (int j = 0; j < N - 1; j++){	//para j de 1 até n – 1 faça
+			for (int w = 0; w < N; w++){		//para cada (v,w) ∈ E(G) faça
 				if (mat[v][w] != 0){
 					if (d[w] > (d[v] + mat[v][w])) // D[w] ← min(D[w], D[v] + Mat[v][w])
 						d[w] = d[v] + mat[v][w];
