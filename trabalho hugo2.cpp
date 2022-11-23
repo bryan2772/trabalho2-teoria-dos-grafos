@@ -212,7 +212,7 @@ void DFS(int **mat, int N,int ordem){
 				j = N;
 			}
 	
-	// inicio BFS
+	// inicio DFS
 	int j = 0, aux2 = 0;
 	if(ordem==1){
 		while (!Vazia2(pilha)){
@@ -256,8 +256,8 @@ void Dijkstra(int **mat, int N){
 	for (int i = 0; i < N; i++)
 		c[i] = d[i] = 0;
 
-	for(int id=0; id<N; id++){
-		i=id;
+	for(int id = 0; id < N; id ++){
+		i = id;
 		for (int i = 0; i < N; i++)
 			c[i] = d[i] = 0;
 		pos = 0, menor = 1001, l = 0, tam = 0;	
@@ -292,7 +292,7 @@ void Dijkstra(int **mat, int N){
 			for (int i = 0; i < tam; i++){ // para cada elemento w ∈ C faça
 				if (c[i] != -1){
 					w = c[i];
-					if(mat[v][w]!=0)	// D[w] ← min(D[w], D[v] + Mat[v][w])
+					if(mat[v][w] != 0)	// D[w] ← min(D[w], D[v] + Mat[v][w])
 						if (d[w] > (d[v] + mat[v][w]))
 							d[w] = d[v] + mat[v][w];
 				}
@@ -302,14 +302,10 @@ void Dijkstra(int **mat, int N){
 }
 
 void BellmanFord(int **mat, int N){
-	int d[N], i, v, vet[N];
+	int d[N], i, v;
 
-	for(int id=0; id<N; id++){
+	for(int id = 0; id < N; id ++){
 		i = v = id;
-		for (int i = 0; i < N; i++)
-			vet[i] = 0;		
-		vet[v] = 1;
-		
 		for (int j = 0; j < N; j++)		//para j de 1 até n faça
 			d[j] = 2000000000;		//D[ j ] ← ∞;
 		d[i] = 0;		//D[i] ← 0;
@@ -319,17 +315,14 @@ void BellmanFord(int **mat, int N){
 					if (d[w] > (d[v] + mat[v][w])) // D[w] ← min(D[w], D[v] + Mat[v][w])
 						d[w] = d[v] + mat[v][w];
 				}
-
 			}
-			for (int i = 0; i < N; i++)
-				if (vet[i] != 1)
-					for (int j = 0; j < N; j++)
-						if (mat[i][j] != 0){
-							v = i;
-							vet[v] = 1;
-							i = N;
-							j = N;
-						}
+			for (int k = v+1; k < N; k++)
+				for (int l = 0; l < N; l++)
+					if (mat[k][l] != 0){
+						v = k;
+						k = N;
+						l = N;
+					}
 		}
 	}
 }
