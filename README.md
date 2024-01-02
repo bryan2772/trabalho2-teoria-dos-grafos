@@ -1,7 +1,8 @@
-# trabalho2-teoria-dos-grafos
+# Trabalho da matéria Teoria dos Grafos
 
-IMPLEMENTAÇÃO DE UM GERADOR DE GRAFOS ARTIFICIAIS E DOS ALGORITMOS DE BUSCA E DE
+IMPLEMENTAÇÃO DE UM GERADOR DE GRAFOS ARTIFICIAIS 
 
-DETECÇÃO DE CAMINHOS MÍNIMOS
+IMPLEMENTAÇÃO DOS ALGORITIMOS DE BUSCA: BFS E DFS
 
-att:ate agora esta gerando a matriz de tamanho n, calculando o k e a porcentagem baseada no d, e gerando pesos aleatorios para grafos nao direcionados.
+IMPLEMENTAÇÃO DOS ALGORITIMOS DE DETECÇÃO DE CAMINHOS MÍNIMOS: Dijkstra, Bellman-Ford e Floyd-Warshall
+
