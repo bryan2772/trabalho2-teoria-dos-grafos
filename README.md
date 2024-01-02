@@ -1,8 +1,7 @@
 # Trabalho da matéria Teoria dos Grafos
 
-IMPLEMENTAÇÃO DE UM GERADOR DE GRAFOS ARTIFICIAIS 
+Este trabalho envolve a implementação de um projeto que inclui:
 
-IMPLEMENTAÇÃO DOS ALGORITIMOS DE BUSCA: BFS E DFS
-
-IMPLEMENTAÇÃO DOS ALGORITIMOS DE DETECÇÃO DE CAMINHOS MÍNIMOS: Dijkstra, Bellman-Ford e Floyd-Warshall
-
+- Um gerador de grafos artificiais;
+- Algoritmos de busca: BFS e DFS;
+- Algoritmos de detecção de caminhos mínimos: Dijkstra, Bellman-Ford e Floyd-Warshall.
